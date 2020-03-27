@@ -11,8 +11,8 @@ const Menu = ({history}) => {
       <Text style={styles.title}>CovidKiller</Text>
       <View style={styles.navContainer}>
         <Button
-          backgroundColor="#fff"
-          color="#ff4340"
+          backgroundColor="transparent"
+          color="#000000"
           fontWeight="bold"
           fontSize={20}
           title="Начать игру"
@@ -21,8 +21,8 @@ const Menu = ({history}) => {
           }}
         />
         <Button
-          backgroundColor="#000"
-          color="#ff4340"
+          backgroundColor="transparent"
+          color="#000000"
           fontWeight="bold"
           fontSize={16}
           title="Выход"
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#000',
+    backgroundColor: '#fff',
     padding: 30,
   },
   title: {

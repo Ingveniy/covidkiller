@@ -1,21 +1,34 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {addElement} from '../../redux/elements/actions';
 
-import {withRouter} from 'react-router-native';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 
 import SpawnedObject from '../../components/SpawnedObject';
-const GameScreen = () => {
+const GameScreen = ({
+  elements = [],
+  score = 0,
+  lastAddCoordinates = {},
+  addElement,
+}) => {
   // TODO: Что нужно сделать для этого компонента
+  useEffect(() => {
+    setInterval(() => {
+      addElement(lastAddCoordinates, 0, 10, 0.1);
+    }, 1000);
+  }, []);
 
   return (
     <View style={styles.gameScreen}>
       <View style={styles.interface}>
-        <Text>Score: 10</Text>
+        <Text style={styles.score}>Score: {score}</Text>
       </View>
       <View style={styles.gameContainer}>
-        <SpawnedObject type={'good'} onPress={() => {}} x={'30%'} y={'80%'} />
-        <SpawnedObject type={'bad'} onPress={() => {}} x={'50%'} y={'90%'} />
-        <SpawnedObject type={'good'} onPress={() => {}} x={'10%'} y={'50%'} />
+        {elements.map(element => {
+          return (
+            <SpawnedObject key={`gameElement-${element.id}`} {...element} />
+          );
+        })}
       </View>
     </View>
   );
@@ -23,16 +36,24 @@ const GameScreen = () => {
 
 const styles = StyleSheet.create({
   gameScreen: {
+    padding: 15,
     flex: 1,
   },
   interface: {
     flex: 1,
-    backgroundColor: 'blue',
+  },
+  score: {
+    fontSize: 16,
   },
   gameContainer: {
     flex: 12,
-    backgroundColor: 'yellow',
   },
 });
 
-export default GameScreen;
+const mapStateToProps = ({elements, score}) => ({
+  elements: elements.elementsOnScreen,
+  lastAddCoordinates: elements.lastAddCoordinates,
+  score: score.score,
+});
+const mapDispatchToProps = {addElement};
+export default connect(mapStateToProps, mapDispatchToProps)(GameScreen);

@@ -1,0 +1,2 @@
+export const CLEAR_SCORE = 'SCORE/CLEAR_SCORE';
+export const ADD_POINTS = 'SCORE/ADD_POINTS';

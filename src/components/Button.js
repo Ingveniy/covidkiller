@@ -11,19 +11,17 @@ const Button = ({
   backgroundColor = '#fff',
 }) => {
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={[styles.btn, {backgroundColor}]}>
-        <Text style={[styles.btn_text, {color, fontSize, fontWeight}]}>
-          {title}
-        </Text>
-      </View>
+    <TouchableOpacity style={[styles.btn, {backgroundColor}]} onPress={onPress}>
+      <Text style={[styles.btn_text, {color, fontSize, fontWeight}]}>
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   btn: {
-    backgroundColor: '#fff',
+    backgroundColor: 'transparent',
     borderRadius: 8,
     minHeight: 50,
     justifyContent: 'center',

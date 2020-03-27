@@ -1,24 +1,45 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {addPoints} from '../redux/score/actions';
+import {removeElement} from '../redux/elements/actions';
 
-import {withRouter} from 'react-router-native';
-import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {TouchableOpacity, StyleSheet} from 'react-native';
 
-const SpawnedObject = ({type, onPress, x = 0, y = 0}) => {
-  // TODO: Что нужно сделать для этого компонента
+const SpawnedObject = ({
+  id,
+  type,
+  x,
+  y,
+  score,
+  liveTime,
+  addPoints,
+  removeElement,
+}) => {
+  // Что нужно сделать для этого элемента
+  // - Прописать анимацию появления и исчезания
 
-  console.log(y, 'y');
-  console.log(x, 'x');
+  const objectRemover = this.setTimeout(() => {
+    console.log('Object setTimeout');
+    if (type === 'good') {
+      addPoints(-score);
+    }
+    removeElement(id);
+  }, liveTime);
 
   return (
-    <TouchableOpacity onPress={() => onPress}>
-      <View
-        style={[
-          styles.container,
-          {backgroundColor: type === 'good' ? 'green' : 'red'},
-          {top: y, left: x},
-        ]}
-      />
-    </TouchableOpacity>
+    <TouchableOpacity
+      style={[
+        styles.container,
+        {backgroundColor: type === 'good' ? 'green' : 'red'},
+        {top: y, left: x},
+      ]}
+      onPress={() => {
+        console.log('Object click');
+        addPoints(score);
+        removeElement(id);
+        clearTimeout(objectRemover);
+      }}
+    />
   );
 };
 
@@ -27,10 +48,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'green',
     position: 'absolute',
+    top: 0,
+    left: 0,
     width: 50,
     height: 50,
     borderRadius: 24,
   },
 });
 
-export default SpawnedObject;
+const mapStateToProps = ({}) => ({});
+const mapDispatchToProps = {
+  addPoints,
+  removeElement,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(SpawnedObject);

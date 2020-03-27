@@ -10,7 +10,7 @@ const App = () => {
     <>
       <Switch>
         <Route exact path={`/`} component={Menu} />
-        <Route exact path={`/game`} component={GameScreen} />
+        <Route exact path={`/game`} component={GameScreen} initialRoute />
       </Switch>
     </>
   );
